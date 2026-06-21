@@ -1,4 +1,13 @@
-h3, h4 {
+:root {
+   --color-btn: #2a7faa;
+   --color-accent: #3daa92;
+   --color-bg: #f2efe9;
+   --color-second: #a18cbf;
+   --color-bg-second: #1a2c3e;
+}
+
+h3,
+h4 {
    margin: 0;
 }
 
@@ -36,4 +45,54 @@ h3, h4 {
 .detail-view th {
    width: 33%;
    padding-left: 18px;
+}
+
+.navbar {
+   background-color: var(--color-bg-second) !important;
+}
+
+.btn-accent {
+   background-color: var(--color-btn) !important;
+   border: none;
+}
+
+.btn-second {
+   border-color: var(--color-second);
+}
+
+body {
+   background-color: var(--color-bg);
+}
+
+.hero {
+   background-color: var(--color-btn) !important;
+}
+
+h1,
+h3,
+h4 {
+   color: var(--color-accent);
+}
+
+.main-block {
+   background-color: white;
+   border-radius: 20px;
+   padding: 30px;
+   gap: 10px;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   text-align: center;
+   transition: 0.2s;
+}
+
+.main-block img {
+   width: 100px;
+   aspect-ratio: 1/1;
+   border-radius: 50%;
+}
+
+.main-block:hover {
+   transform: translateY(-10px);
+   box-shadow: 0px 5px 20px 0px var(--color-bg-second);
 }

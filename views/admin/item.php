@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 <div class="card my-3">
     <div class="card-header d-flex justify-content-between align-items-center">
         <h4>Заявка №<?= $model->id ?></h4>
-        <?= Html::a('Просмотр', ['view', 'id' => $model->id], ['class' => 'btn  btn-second btn-outline-primary']) ?>
+        <?= Html::a('Просмотр', ['view', 'id' => $model->id], ['class' => 'btn btn-second btn-outline-primary']) ?>
     </div>
     <div class="card-body p-0">
         <?= DetailView::widget([
@@ -52,7 +52,9 @@ use yii\widgets\DetailView;
         ]) ?>
 
         <div class="d-flex flex-wrap gap-1 mt-0 m-3">
-            <?= $model->status->alias == 'Finish' && !$model->feedback ? Html::a('Оставить отзыв', ['feedback', 'id' => $model->id], ['class' => 'btn btn-accent btn-primary']) : '' ?>
+            <?= $model->status->alias == 'New' ? Html::a('Подтверждена', ['change-status', 'id' => $model->id, 'alias' => 'Success'], ['class' => 'btn btn-accent btn-primary', 'data-method' => 'post']) : '' ?>
+            <?= $model->status->alias == 'Success' ? Html::a('Идет обучение', ['change-status', 'id' => $model->id, 'alias' => 'Run'], ['class' => 'btn btn-accent btn-primary', 'data-method' => 'post']) : '' ?>
+            <?= $model->status->alias == 'Run' ? Html::a('Завершена', ['change-status', 'id' => $model->id, 'alias' => 'Finish'], ['class' => 'btn btn-accent btn-primary', 'data-method' => 'post']) : '' ?>
         </div>
     </div>
 </div>

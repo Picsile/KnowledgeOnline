@@ -6,37 +6,64 @@ use yii\widgets\DetailView;
 /** @var yii\web\View $this */
 /** @var app\models\Application $model */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Applications', 'url' => ['index']];
+$this->title = 'Заявка №' . $model->id;
+$this->params['breadcrumbs'][] = ['label' => 'Заявки', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="application-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
+    <div class="d-flex align-items-center gap-3 mb-3">
+        <?= Html::a('Назад', ['index'], ['class' => 'btn btn-accent btn-primary']) ?>
+        <h3><?= Html::encode($this->title) ?></h3>
+    </div>
 
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
             'id',
-            'user_id',
-            'programm_id',
-            'date',
-            'pay_type_id',
-            'status_id',
-            'created_at',
+            [
+                'attribute' => 'user_id',
+                'visible' => (bool) Yii::$app->user->identity?->isAdmin,
+                'value' => $model->user->full_name,
+            ],
+            [
+                'attribute' => 'programm_id',
+                'value' => $model->programm->title,
+            ],
+            [
+                'label' => 'Фото диплома',
+                'format' => 'raw',
+                'value' => Html::img('/' . $model->image?->path, ['style' => 'max-width: 400px']),
+            ],
+            [
+                'attribute' => 'date',
+                'value' => Yii::$app->formatter->asDatetime($model->date, 'php: d.m.Y'),
+            ],
+            [
+                'attribute' => 'pay_type_id',
+                'value' => $model->payType->title,
+            ],
+            [
+                'attribute' => 'status_id',
+                'value' => $model->status->title,
+            ],
+            [
+                'attribute' => 'created_at',
+                'value' => Yii::$app->formatter->asDatetime($model->created_at, 'php: d.m.Y H:i:s'),
+            ],
+            [
+                'label' => 'Отзыв',
+                'visible' => (bool) $model->feedback,
+                'value' => $model->feedback?->comment,
+            ],
         ],
     ]) ?>
+
+    <div class="d-flex flex-wrap gap-1">
+        <?= $model->status->alias == 'New' ? Html::a('Подтверждена', ['change-status', 'id' => $model->id, 'alias' => 'Success'], ['class' => 'btn btn-accent btn-primary', 'data-method' => 'post']) : '' ?>
+        <?= $model->status->alias == 'Success' ? Html::a('Идет обучение', ['change-status', 'id' => $model->id, 'alias' => 'Run'], ['class' => 'btn btn-accent btn-primary', 'data-method' => 'post']) : '' ?>
+        <?= $model->status->alias == 'Run' ? Html::a('Завершена', ['change-status', 'id' => $model->id, 'alias' => 'Finish'], ['class' => 'btn btn-accent btn-primary', 'data-method' => 'post']) : '' ?>
+    </div>
 
 </div>

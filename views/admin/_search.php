@@ -1,5 +1,8 @@
 <?php
 
+use app\models\PayType;
+use app\models\Programm;
+use app\models\Status;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -18,25 +21,17 @@ use yii\widgets\ActiveForm;
         ],
     ]); ?>
 
-    <?= $form->field($model, 'id') ?>
 
-    <?= $form->field($model, 'user_id') ?>
-
-    <?= $form->field($model, 'programm_id') ?>
-
-    <?= $form->field($model, 'date') ?>
-
-    <?= $form->field($model, 'pay_type_id') ?>
-
-    <?php // echo $form->field($model, 'status_id') ?>
-
-    <?php // echo $form->field($model, 'created_at') ?>
-
-    <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-outline-secondary']) ?>
+    <div class="d-flex flex-wrap gap-1">
+        <div class="d-flex flex-wrap gap-1">
+            <?= $form->field($model, 'programm_id', ['options' => ['class' => ['m-0']]])->label(false)->dropDownList(Programm::getProgramms(), ['prompt' => 'Курс или вибинар']) ?>
+            <?= $form->field($model, 'pay_type_id', ['options' => ['class' => ['m-0']]])->label(false)->dropDownList(PayType::getPayTypes(), ['prompt' => 'Способ оплаты']) ?>
+            <?= $form->field($model, 'status_id', ['options' => ['class' => ['m-0']]])->label(false)->dropDownList(Status::getStatuses(), ['prompt' => 'Статус']) ?>
+        </div>
+        <div class="d-flex flex-wrap gap-1">
+            <?= Html::submitButton('Поиск', ['class' => 'btn btn-second btn-primary']) ?>
+            <?= Html::a('Сброс', 'index', ['class' => 'btn btn-outline-secondary']) ?>
+        </div>
     </div>
-
     <?php ActiveForm::end(); ?>
-
 </div>
