@@ -78,7 +78,7 @@ class SiteController extends Controller
 
             if ($user = $model->register()) {
                 Yii::$app->session->setFlash('success', 'Вы успешно зарегистрировались!');
-
+                Yii::$app->user->login($user, 3600 * 24 * 30);
                 return $this->redirect('/account');
             }
         }
@@ -89,8 +89,8 @@ class SiteController extends Controller
     }
 
     /**
-     * Login action.
-     *
+     * Метод аунтификации пользователя в системе.
+     * Входные данные: Логин, пароль
      * @return Response|string
      */
     public function actionLogin()
@@ -101,7 +101,13 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+            Yii::$app->session->setFlash('success', 'Вы успешно вошли в систему!');
+
+            if (Yii::$app->user->identity?->isAccount) {
+                return $this->redirect('/account');
+            } else {
+                return $this->redirect('/admin');
+            }
         }
 
         $model->password = '';

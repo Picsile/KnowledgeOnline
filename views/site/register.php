@@ -32,12 +32,14 @@ $this->params['breadcrumbs'][] = $this->title;
 
                     <?= $form->field($model, 'repeat_password') ?>
 
-                    <?= $form->field($model, 'phone') ?>
+                    <?= $form->field($model, 'phone')->widget(\yii\widgets\MaskedInput::class, [
+                        'mask' => '+7(999)-999-99-99',
+                    ]) ?>
 
                     <?= $form->field($model, 'email') ?>
 
                     <div class="form-group mt-4">
-                        <?= Html::submitButton('Зарегистрироваться', ['class' => 'w-100 btn-accent btn btn-primary', 'name' => 'contact-button']) ?>
+                        <?= Html::submitButton('Зарегистрироваться', ['class' => 'w-100 py-2 btn-accent btn btn-primary', 'name' => 'contact-button']) ?>
                     </div>
 
                     <div>

@@ -68,7 +68,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             <?php if (!empty($this->params['breadcrumbs'])): ?>
                 <?= Breadcrumbs::widget(['links' => $this->params['breadcrumbs']]) ?>
             <?php endif ?>
-            <?= Alert::widget() ?>
+            <? // Alert::widget() ?>
 
             <?php foreach (Yii::$app->session->getAllFlashes() as $type => $message): ?>
                 <?php $this->registerJs("createToast('" . $message . "', '" . $type . "')") ?>

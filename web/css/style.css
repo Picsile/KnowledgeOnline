@@ -1,0 +1,30 @@
+#for-toasts {
+   position: fixed;
+   bottom: 50px;
+   right: 20px;
+
+   display: flex;
+   flex-direction: column;
+
+   max-width: 400px;
+   width: 100%;
+}
+
+.my-toast {
+   opacity: 0;
+   animation: my-toast 1s ease 1;
+   transition: 0.5s;
+}
+
+@keyframes my-toast {
+   0% {
+      transform: translateX(120%);
+   }
+   100% {
+      transform: translate(0);
+   }
+}
+
+.my-toast.show {
+   opacity: 1;
+}

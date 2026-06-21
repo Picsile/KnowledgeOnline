@@ -25,7 +25,21 @@ class RegisterForm extends Model
         return [
             // name, email, subject and body are required
             [['full_name', 'login', 'password', 'repeat_password', 'email', 'phone'], 'required'],
+            [['full_name', 'login', 'password', 'repeat_password', 'email', 'phone'], 'string', 'max' => '255'],
+
+            ['full_name', 'match', 'pattern' => '/^[а-яё\s-]+$/iu', 'message' => 'только кириллические буквы, дефис и пробелы'],
+
+            ['login', 'unique', 'targetClass' => User::class],
+            ['login', 'match', 'pattern' => '/^[a-z-]+$/i', 'message' => 'только латиница и дефис, уникальный в системе'],
+
+            ['phone', 'match', 'pattern' => '/^\+7\([\d]{3}\)\-[\d]{3}\-[\d]{2}\-[\d]{2}$/', 'message' => 'в формате +7(XXX)-XXX-XX-XX'],
+
+            ['password', 'string', 'min' => 6],
+            ['password', 'match', 'pattern' => '/^(?=.*[A-Z])(?=.*[$#&%^])[A-Za-z$#&%^]+$/', 'message' => 'минимум 6 символов, минимум 1 большая буква и 1 специальный символ ($, #, &, %, ^), латиница'],
+            ['repeat_password', 'compare', 'compareAttribute' => 'password'],
+
             // email has to be a valid email address
+            ['email', 'unique', 'targetClass' => User::class],
             ['email', 'email'],
         ];
     }
