@@ -45,7 +45,7 @@ class Feedback extends \yii\db\ActiveRecord
     {
         return [
             'application_id' => 'Application ID',
-            'comment' => 'Comment',
+            'comment' => 'Текст отзыва',
         ];
     }
 

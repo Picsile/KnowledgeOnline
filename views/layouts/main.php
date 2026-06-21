@@ -43,6 +43,14 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             'items' => [
                 ['label' => 'Главная', 'url' => ['/site/index']],
 
+                Yii::$app->user->identity?->isAccount
+                    ? ['label' => 'Личный кабинет', 'url' => ['/account']]
+                    : '',
+
+                Yii::$app->user->identity?->isAdmin
+                    ? ['label' => 'Панель администратора', 'url' => ['/admin']]
+                    : '',
+
                 Yii::$app->user->isGuest
                     ? ['label' => 'Регистрация', 'url' => ['/site/register']]
                     : '',
@@ -68,7 +76,8 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             <?php if (!empty($this->params['breadcrumbs'])): ?>
                 <?= Breadcrumbs::widget(['links' => $this->params['breadcrumbs']]) ?>
             <?php endif ?>
-            <? // Alert::widget() ?>
+            <? // Alert::widget() 
+            ?>
 
             <?php foreach (Yii::$app->session->getAllFlashes() as $type => $message): ?>
                 <?php $this->registerJs("createToast('" . $message . "', '" . $type . "')") ?>
@@ -85,9 +94,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         </div>
     </footer>
 
-    <div id="for-toasts">
-
-    </div>
+    <div id="for-toasts"></div>
 
     <?php $this->endBody() ?>
 </body>

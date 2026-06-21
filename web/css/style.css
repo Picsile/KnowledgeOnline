@@ -1,3 +1,7 @@
+h3, h4 {
+   margin: 0;
+}
+
 #for-toasts {
    position: fixed;
    bottom: 50px;
@@ -27,4 +31,9 @@
 
 .my-toast.show {
    opacity: 1;
+}
+
+.detail-view th {
+   width: 33%;
+   padding-left: 18px;
 }

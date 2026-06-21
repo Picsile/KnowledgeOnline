@@ -56,4 +56,8 @@ class Programm extends \yii\db\ActiveRecord
         return $this->hasMany(Application::class, ['programm_id' => 'id']);
     }
 
+    public static function getProgramms(): array
+    {
+        return static::find()->select('title')->indexBy('id')->column();
+    }
 }

@@ -58,4 +58,8 @@ class Status extends \yii\db\ActiveRecord
         return $this->hasMany(Application::class, ['status_id' => 'id']);
     }
 
+    public static function getStatuses(): array
+    {
+        return static::find()->select('title')->indexBy('id')->column();
+    }
 }

@@ -47,7 +47,16 @@ class Application extends \yii\db\ActiveRecord
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
             [['programm_id'], 'exist', 'skipOnError' => true, 'targetClass' => Programm::class, 'targetAttribute' => ['programm_id' => 'id']],
             [['status_id'], 'exist', 'skipOnError' => true, 'targetClass' => Status::class, 'targetAttribute' => ['status_id' => 'id']],
+
+            ['date', 'dateValid'],
         ];
+    }
+
+    public function dateValid()
+    {
+        if (strtotime($this->date) < strtotime(date('Y-m-d'))) {
+            return $this->addError('date', 'Дата не может быть раньше текущей');
+        }
     }
 
     /**
@@ -56,13 +65,13 @@ class Application extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'user_id' => 'User ID',
-            'programm_id' => 'Programm ID',
-            'date' => 'Date',
-            'pay_type_id' => 'Pay Type ID',
-            'status_id' => 'Status ID',
-            'created_at' => 'Created At',
+            'id' => '№',
+            'user_id' => 'ФИО',
+            'programm_id' => 'Наименование курса или вибинара',
+            'date' => 'Желаемая дата начала участия',
+            'pay_type_id' => 'Способ оплаты',
+            'status_id' => 'Статус заявки',
+            'created_at' => 'Время создания заявки',
         ];
     }
 
@@ -125,5 +134,4 @@ class Application extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
     }
-
 }
